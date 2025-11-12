@@ -219,7 +219,7 @@ const Hero = () => {
             </motion.a>
             <motion.a
               href="/Avinash Ranjan.pdf"
-              download
+              download="Avinash_Ranjan_Resume.pdf"
               className="flex items-center gap-2 px-6 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-full hover:bg-gray-900 dark:hover:bg-gray-600 shadow-lg backdrop-blur-sm border border-gray-700/30"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
