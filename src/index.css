@@ -20,6 +20,20 @@
   .glass-effect {
     @apply bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border border-white/20 dark:border-gray-700/20;
   }
+  
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+    background-size: 200% 200%;
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Smooth scrolling */
