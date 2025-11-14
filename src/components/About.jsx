@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaCode, FaBrain, FaRocket } from 'react-icons/fa'
+import { FaCode, FaBrain, FaRocket, FaRobot } from 'react-icons/fa'
 
 const About = () => {
   const containerVariants = {
@@ -25,19 +25,19 @@ const About = () => {
 
   const features = [
     {
-      icon: <FaCode className="text-3xl" />,
-      title: 'Full-Stack Development',
-      description: 'Building end-to-end applications with modern frameworks',
+      icon: <FaBrain className="text-3xl" />,
+      title: 'AI/ML & LLM Specialist',
+      description: 'Expert in Large Language Models, Prompt Engineering, RAG systems, and vector embeddings. Building intelligent solutions with OpenAI and AWS Bedrock',
     },
     {
-      icon: <FaBrain className="text-3xl" />,
-      title: 'AI/ML Expertise',
-      description: 'Implementing intelligent solutions with LLMs and ML models',
+      icon: <FaCode className="text-3xl" />,
+      title: 'Full-Stack Development',
+      description: 'Building end-to-end applications with modern frameworks and scalable architectures',
     },
     {
       icon: <FaRocket className="text-3xl" />,
-      title: 'Scalable Solutions',
-      description: 'Designing systems that grow with your business needs',
+      title: 'Cloud & DevOps',
+      description: 'Deploying scalable solutions with Docker, Kubernetes, and AWS cloud infrastructure',
     },
   ]
 
@@ -67,18 +67,18 @@ const About = () => {
           >
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               Highly motivated and results-oriented technology professional with 4+ years of experience 
-              in full-stack development and AI/ML engineering. I specialize in building scalable web 
-              applications and implementing AI-powered solutions that drive business growth.
+              specializing in <strong className="text-purple-600 dark:text-purple-400">AI/ML engineering</strong> and full-stack development. 
+              I excel at building intelligent systems powered by Large Language Models (LLMs) and modern cloud infrastructure.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              My expertise spans across Python, Django, React.js, and cutting-edge AI technologies 
-              including Large Language Models (LLMs) and vector databases. I'm passionate about 
-              creating innovative solutions that solve real-world problems.
+              My core expertise lies in <strong className="text-purple-600 dark:text-purple-400">AI/ML technologies</strong> including LLMs, Prompt Engineering, 
+              RAG (Retrieval-Augmented Generation) systems, vector embeddings, and deploying AI models at scale. 
+              I've architected AI-powered solutions processing thousands of documents using OpenAI API and AWS Bedrock.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              Currently leading backend development at DLAI (DeepLogic AI), where I architect 
-              complex APIs and AI/ML-driven solutions. I thrive in collaborative environments and 
-              enjoy working with cross-functional teams to deliver exceptional results.
+              Currently leading backend development at <strong>DLAI (DeepLogic AI)</strong>, where I design and implement 
+              complex AI/ML-driven solutions. I specialize in containerizing applications with <strong>Docker</strong> and 
+              orchestrating them with <strong>Kubernetes</strong> for scalable, production-ready deployments.
             </p>
           </motion.div>
 
@@ -93,11 +93,17 @@ const About = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+                className={`p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-shadow ${
+                  index === 0 ? 'ring-2 ring-purple-500/30 dark:ring-purple-400/30' : ''
+                }`}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                  <div className={`p-3 rounded-lg ${
+                    index === 0 
+                      ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' 
+                      : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                  }`}>
                     {feature.icon}
                   </div>
                   <div>
@@ -119,4 +125,3 @@ const About = () => {
 }
 
 export default About
-

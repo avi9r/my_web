@@ -191,8 +191,9 @@ const Hero = () => {
             variants={itemVariants}
             className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Crafting innovative solutions with cutting-edge technology. 
-            Passionate about building scalable applications and AI-powered systems.
+            Specializing in <strong className="text-purple-600 dark:text-purple-400">AI/ML & Large Language Models</strong>. 
+            Crafting intelligent solutions with LLMs, vector embeddings, and cloud infrastructure. 
+            Passionate about building scalable, AI-powered systems that transform businesses.
           </motion.p>
 
           <motion.div

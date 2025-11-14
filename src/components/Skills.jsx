@@ -3,7 +3,7 @@ import {
   FaPython, FaPhp, FaJs, FaReact, FaAws, FaDocker,
   FaGitAlt, FaDatabase, FaBrain, FaCode
 } from 'react-icons/fa'
-import { SiDjango, SiLaravel, SiPostgresql, SiMysql } from 'react-icons/si'
+import { SiDjango, SiLaravel, SiPostgresql, SiMysql, SiKubernetes, SiOpenai } from 'react-icons/si'
 
 const Skills = () => {
   const skillCategories = [
@@ -13,6 +13,17 @@ const Skills = () => {
         { name: 'Python', icon: <FaPython />, level: 95 },
         { name: 'PHP', icon: <FaPhp />, level: 85 },
         { name: 'JavaScript', icon: <FaJs />, level: 90 },
+      ],
+    },
+    {
+      title: 'AI/ML & LLM Technologies',
+      skills: [
+        { name: 'Large Language Models (LLMs)', icon: <SiOpenai />, level: 90 },
+        { name: 'Prompt Engineering', icon: <FaBrain />, level: 88 },
+        { name: 'Vector Embeddings', icon: <FaCode />, level: 85 },
+        { name: 'RAG Systems', icon: <FaBrain />, level: 85 },
+        { name: 'OpenAI API', icon: <SiOpenai />, level: 90 },
+        { name: 'AWS Bedrock', icon: <FaAws />, level: 85 },
       ],
     },
     {
@@ -28,22 +39,15 @@ const Skills = () => {
       skills: [
         { name: 'PostgreSQL', icon: <SiPostgresql />, level: 90 },
         { name: 'MySQL', icon: <SiMysql />, level: 85 },
-        { name: 'Vector DBs', icon: <FaDatabase />, level: 80 },
-      ],
-    },
-    {
-      title: 'AI/ML Technologies',
-      skills: [
-        { name: 'LLMs', icon: <FaBrain />, level: 85 },
-        { name: 'ML Models', icon: <FaBrain />, level: 80 },
-        { name: 'Vector Embeddings', icon: <FaCode />, level: 85 },
+        { name: 'Vector DBs (pgvector, Pinecone)', icon: <FaDatabase />, level: 85 },
       ],
     },
     {
       title: 'DevOps & Cloud',
       skills: [
-        { name: 'AWS', icon: <FaAws />, level: 80 },
-        { name: 'Docker', icon: <FaDocker />, level: 85 },
+        { name: 'Docker', icon: <FaDocker />, level: 88 },
+        { name: 'Kubernetes', icon: <SiKubernetes />, level: 80 },
+        { name: 'AWS', icon: <FaAws />, level: 85 },
         { name: 'Git', icon: <FaGitAlt />, level: 90 },
       ],
     },
@@ -93,7 +97,7 @@ const Skills = () => {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            A comprehensive overview of my technical expertise and proficiency levels
+            Specialized expertise in AI/ML, LLMs, and modern cloud infrastructure
           </p>
         </motion.div>
 
@@ -105,7 +109,9 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: catIndex * 0.1 }}
-              className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-lg"
+              className={`bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-lg ${
+                category.title.includes('AI/ML') ? 'ring-2 ring-purple-500/50 dark:ring-purple-400/50' : ''
+              }`}
             >
               <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-200">
                 {category.title}
@@ -122,4 +128,3 @@ const Skills = () => {
 }
 
 export default Skills
-
