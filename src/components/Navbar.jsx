@@ -18,11 +18,12 @@ const Navbar = () => {
 
   const navItems = [
     { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Vision', href: '#about' },
+    { name: 'Capabilities', href: '#skills' },
+    { name: 'Journey', href: '#experience' },
+    { name: 'Portfolio', href: '#projects' },
+    { name: 'Ventures', href: '#hot-projects' },
+    { name: 'Connect', href: '#contact' },
   ]
 
   return (
@@ -52,20 +53,31 @@ const Navbar = () => {
               <motion.a
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium"
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
+                className="interactive text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium relative group"
+                whileHover={{ y: -3, scale: 1.05 }}
+                whileTap={{ y: 0, scale: 0.95 }}
               >
                 {item.name}
+                <motion.span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '100%' }}
+                />
               </motion.a>
             ))}
             <motion.button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-              whileHover={{ scale: 1.1, rotate: 15 }}
+              className="interactive p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 relative overflow-hidden group"
+              whileHover={{ scale: 1.15, rotate: 360 }}
               whileTap={{ scale: 0.9 }}
             >
-              {isDark ? <FaSun className="text-yellow-500" /> : <FaMoon className="text-gray-700" />}
+              <span className="relative z-10">
+                {isDark ? (
+                  <FaSun className="text-yellow-500" />
+                ) : (
+                  <FaMoon className="text-gray-700" />
+                )}
+              </span>
             </motion.button>
           </div>
 

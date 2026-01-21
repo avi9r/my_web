@@ -60,23 +60,39 @@ const Skills = () => {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ delay: index * 0.1 }}
-        className="mb-6"
+        className="mb-6 group"
+        whileHover={{ scale: 1.02, x: 5 }}
       >
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-200">
-            <span className="text-blue-600 dark:text-blue-400">{skill.icon}</span>
+          <motion.div 
+            className="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-200"
+            whileHover={{ scale: 1.05 }}
+          >
+            <span className="text-blue-600 dark:text-blue-400">
+              {skill.icon}
+            </span>
             <span>{skill.name}</span>
-          </div>
-          <span className="text-sm text-gray-600 dark:text-gray-400">{skill.level}%</span>
+          </motion.div>
+          <motion.span 
+            className="text-sm text-gray-600 dark:text-gray-400 font-bold"
+            whileHover={{ scale: 1.2, color: "#9333ea" }}
+          >
+            {skill.level}%
+          </motion.span>
         </div>
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden relative">
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: `${skill.level}%` }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: index * 0.1 }}
-            className="h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
-          />
+            transition={{ duration: 1.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+            className="h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full relative overflow-hidden"
+          >
+            {/* Glow effect */}
+            <motion.div
+              className="absolute inset-0 bg-blue-400 blur-sm opacity-0 group-hover:opacity-50 transition-opacity"
+            />
+          </motion.div>
         </div>
       </motion.div>
     )
@@ -93,11 +109,11 @@ const Skills = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Technical <span className="gradient-text">Skills</span>
+            Core <span className="gradient-text">Capabilities</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Specialized expertise in AI/ML, LLMs, and modern cloud infrastructure
+            Strategic expertise that drives business innovation and competitive advantage
           </p>
         </motion.div>
 
@@ -105,20 +121,38 @@ const Skills = () => {
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={catIndex}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, rotateX: -10 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: catIndex * 0.1 }}
-              className={`bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-lg ${
+              transition={{ delay: catIndex * 0.1, type: "spring" }}
+              whileHover={{ 
+                y: -5, 
+                scale: 1.01,
+                transition: { duration: 0.2 }
+              }}
+              className={`bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all relative overflow-hidden group interactive ${
                 category.title.includes('AI/ML') ? 'ring-2 ring-purple-500/50 dark:ring-purple-400/50' : ''
               }`}
             >
-              <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-200">
+              {/* Animated background gradient */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${
+                  category.title.includes('AI/ML') 
+                    ? 'from-purple-500/10 to-pink-500/10' 
+                    : 'from-blue-500/10 to-cyan-500/10'
+                } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              />
+              <div className="relative z-10">
+              <motion.h3 
+                className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all"
+                whileHover={{ scale: 1.05 }}
+              >
                 {category.title}
-              </h3>
+              </motion.h3>
               {category.skills.map((skill, index) => (
                 <SkillBar key={index} skill={skill} index={index} />
               ))}
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaLinkedin, FaEnvelope, FaGithub, FaDownload } from 'react-icons/fa'
 import { HiCode } from 'react-icons/hi'
+import TypingAnimation from './TypingAnimation'
 
 const Hero = () => {
   const containerVariants = {
@@ -30,49 +31,33 @@ const Hero = () => {
       {/* Base gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
       
-      {/* Animated gradient orbs */}
+      {/* Animated gradient orbs - reduced for performance */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute w-96 h-96 bg-blue-400 dark:bg-blue-600 rounded-full blur-3xl opacity-30 dark:opacity-20"
+          className="absolute w-96 h-96 bg-blue-400 dark:bg-blue-600 rounded-full blur-3xl opacity-20 dark:opacity-15"
           animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
           }}
           transition={{
-            duration: 20,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut",
           }}
           style={{ top: '10%', left: '10%' }}
         />
         <motion.div
-          className="absolute w-96 h-96 bg-purple-400 dark:bg-purple-600 rounded-full blur-3xl opacity-30 dark:opacity-20"
+          className="absolute w-96 h-96 bg-purple-400 dark:bg-purple-600 rounded-full blur-3xl opacity-20 dark:opacity-15"
           animate={{
-            x: [0, -80, 0],
-            y: [0, 100, 0],
-            scale: [1, 1.3, 1],
+            x: [0, -40, 0],
+            y: [0, 50, 0],
           }}
           transition={{
-            duration: 25,
+            duration: 18,
             repeat: Infinity,
             ease: "easeInOut",
           }}
           style={{ top: '60%', right: '10%' }}
-        />
-        <motion.div
-          className="absolute w-96 h-96 bg-pink-400 dark:bg-pink-600 rounded-full blur-3xl opacity-30 dark:opacity-20"
-          animate={{
-            x: [0, 120, 0],
-            y: [0, -60, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{ bottom: '20%', left: '50%' }}
         />
       </div>
 
@@ -107,43 +92,30 @@ const Hero = () => {
         />
       </div>
 
-      {/* Floating particles */}
-      {[...Array(20)].map((_, i) => (
+      {/* Floating particles - reduced for performance */}
+      {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 bg-blue-400 dark:bg-blue-500 rounded-full opacity-60"
           animate={{
             y: [0, -30, 0],
             x: [0, Math.sin(i) * 20, 0],
-            opacity: [0.3, 0.8, 0.3],
-            scale: [0.8, 1.2, 0.8],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: 4 + i,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: i * 0.5,
             ease: "easeInOut",
           }}
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${20 + i * 15}%`,
+            top: `${20 + i * 10}%`,
           }}
         />
       ))}
 
-      {/* Shimmer effect */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent"
-        animate={{
-          x: ['-100%', '200%'],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{ transform: 'skewX(-20deg)' }}
-      />
+      {/* Shimmer effect - removed for performance */}
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -182,18 +154,23 @@ const Hero = () => {
 
           <motion.p
             variants={itemVariants}
-            className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-2 font-medium"
+            className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-2 font-medium min-h-[2rem]"
           >
-            Full-Stack Developer & AI/ML Engineer
+            <TypingAnimation 
+              words={['Founder & AI Innovation Leader', 'Tech Entrepreneur', 'AI Solutions Architect', 'Business Technology Strategist']}
+              speed={100}
+              deleteSpeed={50}
+              delay={2000}
+            />
           </motion.p>
 
           <motion.p
             variants={itemVariants}
             className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Specializing in <strong className="text-purple-600 dark:text-purple-400">AI/ML & Large Language Models</strong>. 
-            Crafting intelligent solutions with LLMs, vector embeddings, and cloud infrastructure. 
-            Passionate about building scalable, AI-powered systems that transform businesses.
+            Building the future of <strong className="text-purple-600 dark:text-purple-400">AI-powered business solutions</strong>. 
+            Transforming enterprises through intelligent automation, cutting-edge LLM technologies, and scalable cloud infrastructure. 
+            Leading innovation that drives real business value and competitive advantage.
           </motion.p>
 
           <motion.div
@@ -204,28 +181,40 @@ const Hero = () => {
               href="https://www.linkedin.com/in/avinashranjan9/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg backdrop-blur-sm border border-blue-500/30"
-              whileHover={{ scale: 1.05, y: -2, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.4)" }}
+              className="interactive flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg backdrop-blur-sm border border-blue-500/30 relative overflow-hidden group"
+              whileHover={{ scale: 1.1, y: -5, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
-              <FaLinkedin /> LinkedIn
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="relative z-10 flex items-center gap-2">
+                <FaLinkedin />
+                LinkedIn
+              </span>
             </motion.a>
             <motion.a
               href="mailto:avinashranjan633@gmail.com"
-              className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 shadow-lg backdrop-blur-sm border border-purple-500/30"
-              whileHover={{ scale: 1.05, y: -2, boxShadow: "0 10px 25px rgba(147, 51, 234, 0.4)" }}
+              className="interactive flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 shadow-lg backdrop-blur-sm border border-purple-500/30 relative overflow-hidden group"
+              whileHover={{ scale: 1.1, y: -5, boxShadow: "0 20px 40px rgba(147, 51, 234, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
-              <FaEnvelope /> Email
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="relative z-10 flex items-center gap-2">
+                <FaEnvelope />
+                Email
+              </span>
             </motion.a>
             <motion.a
               href="/Avinash Ranjan.pdf"
-              download="Avinash_Ranjan_Resume.pdf"
-              className="flex items-center gap-2 px-6 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-full hover:bg-gray-900 dark:hover:bg-gray-600 shadow-lg backdrop-blur-sm border border-gray-700/30"
-              whileHover={{ scale: 1.05, y: -2 }}
+              download="Avinash_Ranjan_Profile.pdf"
+              className="interactive flex items-center gap-2 px-6 py-3 bg-gray-800 dark:bg-gray-700 text-white rounded-full hover:bg-gray-900 dark:hover:bg-gray-600 shadow-lg backdrop-blur-sm border border-gray-700/30 relative overflow-hidden group"
+              whileHover={{ scale: 1.1, y: -5, boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)" }}
               whileTap={{ scale: 0.95 }}
             >
-              <FaDownload /> Resume
+              <span className="absolute inset-0 bg-gradient-to-r from-gray-600 to-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="relative z-10 flex items-center gap-2">
+                <FaDownload />
+                Download Profile
+              </span>
             </motion.a>
           </motion.div>
 
@@ -237,19 +226,21 @@ const Hero = () => {
               href="https://www.linkedin.com/in/avinashranjan9/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:scale-125 transition-transform"
-              whileHover={{ scale: 1.3, rotate: 5 }}
+              className="interactive text-blue-600 dark:text-blue-400 relative group"
+              whileHover={{ scale: 1.5, rotate: 360 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaLinkedin />
+              <div className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              <FaLinkedin className="relative z-10" />
             </motion.a>
             <motion.a
               href="mailto:avinashranjan633@gmail.com"
-              className="text-purple-600 dark:text-purple-400 hover:scale-125 transition-transform"
-              whileHover={{ scale: 1.3, rotate: -5 }}
+              className="interactive text-purple-600 dark:text-purple-400 relative group"
+              whileHover={{ scale: 1.5, rotate: -360 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaEnvelope />
+              <div className="absolute inset-0 bg-purple-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              <FaEnvelope className="relative z-10" />
             </motion.a>
           </motion.div>
         </motion.div>
