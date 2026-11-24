@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { FaMoon, FaSun, FaBars, FaTimes } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { FaMoon, FaSun, FaBars, FaTimes, FaChevronRight } from 'react-icons/fa'
 import ThemeProvider, { useTheme } from '../context/ThemeContext'
 import { tracks } from '../data/curriculum'
 
@@ -47,12 +47,24 @@ function TopBar({ onOpenNav }) {
   )
 }
 
+function trackIdFromPath(pathname) {
+  const match = tracks.find((t) => pathname === t.path || pathname.startsWith(`${t.path}/`))
+  return match?.id || ''
+}
+
 function CurriculumSidebar({ open, onClose }) {
   const location = useLocation()
-  const [expanded, setExpanded] = useState(() => {
-    const match = tracks.find((t) => location.pathname.startsWith(t.path))
-    return match?.id || 'dsa'
-  })
+  const [expanded, setExpanded] = useState(() => trackIdFromPath(location.pathname) || 'dsa')
+
+  // Keep the open section in sync with the current lesson route
+  useEffect(() => {
+    const current = trackIdFromPath(location.pathname)
+    if (current) setExpanded(current)
+  }, [location.pathname])
+
+  const toggleTrack = (id) => {
+    setExpanded((prev) => (prev === id ? '' : id))
+  }
 
   return (
     <>
@@ -76,51 +88,68 @@ function CurriculumSidebar({ open, onClose }) {
           </button>
         </div>
         <div className="px-3 pb-8">
-          {tracks.map((track) => (
-            <div key={track.id} className="mb-2">
-              <button
-                type="button"
-                className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/5"
-                onClick={() => setExpanded((e) => (e === track.id ? '' : track.id))}
-                style={{ borderLeft: `3px solid ${track.accent}` }}
-              >
-                <Link
-                  to={track.path}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onClose()
-                  }}
-                  className="flex-1"
+          {tracks.map((track) => {
+            const isOpen = expanded === track.id
+            return (
+              <div key={track.id} className="mb-1">
+                <div
+                  className="flex w-full items-center gap-1 rounded-md px-1 py-1 text-sm font-semibold text-slate-800 dark:text-slate-100"
+                  style={{ borderLeft: `3px solid ${track.accent}` }}
                 >
-                  {track.title}
-                </Link>
-                <span className="text-xs text-slate-500">{track.subtopics.length}</span>
-              </button>
-              {expanded === track.id && (
-                <ul className="mt-1 space-y-0.5 pl-3">
-                  {track.subtopics.map((sub) => {
-                    const href = track.id === 'dsa' ? `${track.path}/${sub.id}` : `${track.path}/${sub.id}`
-                    const active = location.pathname === href || location.pathname === `${href}/`
-                    return (
-                      <li key={sub.id}>
-                        <Link
-                          to={href}
-                          onClick={onClose}
-                          className={`block rounded-md px-2 py-1.5 text-xs ${
-                            active
-                              ? 'bg-teal-700/15 text-teal-800 dark:text-teal-300 font-medium'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5'
-                          }`}
-                        >
-                          {sub.title}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </div>
-          ))}
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-label={isOpen ? `Collapse ${track.title}` : `Expand ${track.title}`}
+                    onClick={() => toggleTrack(track.id)}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md hover:bg-black/5 dark:hover:bg-white/5"
+                  >
+                    <FaChevronRight
+                      className={`text-teal-600 dark:text-teal-400 transition-transform duration-200 ${
+                        isOpen ? 'rotate-90' : ''
+                      }`}
+                    />
+                  </button>
+                  <Link
+                    to={track.path}
+                    onClick={() => {
+                      setExpanded(track.id)
+                      onClose()
+                    }}
+                    className="flex-1 rounded-md px-1 py-1.5 hover:bg-black/5 dark:hover:bg-white/5"
+                  >
+                    {track.title}
+                  </Link>
+                  <span className="pr-2 text-[10px] tabular-nums text-slate-500">{track.subtopics.length}</span>
+                </div>
+
+                {isOpen && (
+                  <ul className="mt-0.5 mb-2 space-y-0.5 pl-9">
+                    {track.subtopics.map((sub) => {
+                      const href = `${track.path}/${sub.id}`
+                      const active =
+                        location.pathname === href ||
+                        location.pathname === `${href}/`
+                      return (
+                        <li key={sub.id}>
+                          <Link
+                            to={href}
+                            onClick={onClose}
+                            className={`block rounded-md px-2 py-1.5 text-xs ${
+                              active
+                                ? 'bg-teal-700/15 text-teal-800 dark:text-teal-300 font-medium'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5'
+                            }`}
+                          >
+                            {sub.title}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </div>
+            )
+          })}
           <div className="mt-6 border-t border-slate-300 dark:border-slate-800 pt-4 px-2 space-y-2 text-sm">
             <Link to="/about" onClick={onClose} className="block text-slate-700 dark:text-slate-300 hover:text-teal-700">
               About me
@@ -139,6 +168,10 @@ function Shell() {
   const [navOpen, setNavOpen] = useState(false)
   const location = useLocation()
   const isLearn = location.pathname.startsWith('/learn')
+
+  useEffect(() => {
+    setNavOpen(false)
+  }, [location.pathname])
 
   return (
     <div className="min-h-screen bg-[#f7f4ef] dark:bg-slate-950 text-slate-900 dark:text-slate-100">
