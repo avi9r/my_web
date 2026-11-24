@@ -2,7 +2,29 @@ import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { FaMoon, FaSun, FaBars, FaTimes, FaChevronRight } from 'react-icons/fa'
 import ThemeProvider, { useTheme } from '../context/ThemeContext'
+import { JobPrepAccessProvider, useJobPrepAccess } from '../context/JobPrepAccessContext'
+import JobPrepUnlockModal from '../components/JobPrepUnlockModal'
 import { tracks } from '../data/curriculum'
+
+function JobPrepNavLink() {
+  const { unlocked, requestUnlock } = useJobPrepAccess()
+  if (unlocked) {
+    return (
+      <Link to="/job-prep" className="hover:text-teal-700 dark:hover:text-teal-400">
+        Job Prep
+      </Link>
+    )
+  }
+  return (
+    <button
+      type="button"
+      onClick={requestUnlock}
+      className="hover:text-teal-700 dark:hover:text-teal-400"
+    >
+      Job Prep
+    </button>
+  )
+}
 
 function TopBar({ onOpenNav }) {
   const { isDark, toggleTheme } = useTheme()
@@ -31,6 +53,7 @@ function TopBar({ onOpenNav }) {
         <nav className="hidden sm:flex items-center gap-5 text-sm text-slate-600 dark:text-slate-300">
           <Link to="/" className="hover:text-teal-700 dark:hover:text-teal-400">Home</Link>
           <Link to="/learn/dsa" className="hover:text-teal-700 dark:hover:text-teal-400">Curriculum</Link>
+          <JobPrepNavLink />
           <Link to="/about" className="hover:text-teal-700 dark:hover:text-teal-400">About</Link>
           <Link to="/contact" className="hover:text-teal-700 dark:hover:text-teal-400">Contact</Link>
         </nav>
@@ -189,7 +212,10 @@ function Shell() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <Shell />
+      <JobPrepAccessProvider>
+        <Shell />
+        <JobPrepUnlockModal />
+      </JobPrepAccessProvider>
     </ThemeProvider>
   )
 }

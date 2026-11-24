@@ -8,6 +8,10 @@ const Contact = lazy(() => import('./pages/Contact'))
 const TrackPage = lazy(() => import('./pages/TrackPage'))
 const LessonPage = lazy(() => import('./pages/LessonPage'))
 const DsaRoutes = lazy(() => import('./learn/dsa/DsaRoutes'))
+const JobPrepGate = lazy(() => import('./pages/job-prep/JobPrepGate'))
+const JobPrepHome = lazy(() => import('./pages/job-prep/JobPrepHome'))
+const JobPrepSection = lazy(() => import('./pages/job-prep/JobPrepSection'))
+const JobPrepTopic = lazy(() => import('./pages/job-prep/JobPrepTopic'))
 
 function Loading() {
   return (
@@ -29,6 +33,11 @@ export default function App() {
             <Route path="learn/dsa/*" element={<DsaRoutes />} />
             <Route path="learn/:trackId" element={<TrackPage />} />
             <Route path="learn/:trackId/:lessonId" element={<LessonPage />} />
+            <Route path="job-prep" element={<JobPrepGate />}>
+              <Route index element={<JobPrepHome />} />
+              <Route path=":sectionId" element={<JobPrepSection />} />
+              <Route path=":sectionId/:topicId" element={<JobPrepTopic />} />
+            </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { featuredTracks, tracks } from '../data/curriculum'
+import { useJobPrepAccess } from '../context/JobPrepAccessContext'
 
 export default function Home() {
+  const navigate = useNavigate()
+  const { unlocked, requestUnlock } = useJobPrepAccess()
+
   return (
     <div>
       <section className="relative overflow-hidden">
@@ -43,8 +47,48 @@ export default function Home() {
             >
               About me
             </Link>
+            {unlocked ? (
+              <Link
+                to="/job-prep"
+                className="rounded-md border border-amber-600/50 text-amber-900 dark:text-amber-200 px-5 py-2.5 text-sm font-medium"
+              >
+                Job Prep
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={requestUnlock}
+                className="rounded-md border border-amber-600/50 text-amber-900 dark:text-amber-200 px-5 py-2.5 text-sm font-medium"
+              >
+                Job Prep (locked)
+              </button>
+            )}
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-4">
+        <button
+          type="button"
+          onClick={() => (unlocked ? navigate('/job-prep') : requestUnlock())}
+          className="w-full text-left rounded-2xl border border-amber-600/30 bg-amber-500/10 p-5 hover:bg-amber-500/15 transition"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-300">
+                {unlocked ? 'Unlocked' : 'Email to unlock'}
+              </p>
+              <h2 className="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Job Prep track</h2>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+                Production Python, interview DSA, system design case studies, agentic RAG, DevOps/cloud, and target roles —
+                private prep material.
+              </p>
+            </div>
+            <span className="text-sm font-semibold text-amber-900 dark:text-amber-200">
+              {unlocked ? 'Open →' : 'Request access →'}
+            </span>
+          </div>
+        </button>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-8">
