@@ -513,6 +513,322 @@ export function AgentLoopLab() {
   return <PipelineLab stages={steps} title="Agent loop playground" />
 }
 
+/** Tool-calling JSON validator */
+export function ToolCallLab() {
+  const schema = '{ "name": "search_docs", "args": { "query": string, "top_k": number } }'
+  const [raw, setRaw] = useState('{"name":"search_docs","args":{"query":"invoice sap","top_k":5}}')
+  const result = useMemo(() => {
+    try {
+      const parsed = JSON.parse(raw)
+      if (parsed.name !== 'search_docs') return { ok: false, msg: 'Unknown tool name — allowlist rejected this call.' }
+      if (typeof parsed.args?.query !== 'string' || typeof parsed.args?.top_k !== 'number') {
+        return { ok: false, msg: 'Args failed schema validation.' }
+      }
+      if (parsed.args.top_k < 1 || parsed.args.top_k > 20) {
+        return { ok: false, msg: 'top_k out of budget (1–20).' }
+      }
+      return { ok: true, msg: `Queued tool: search_docs("${parsed.args.query}", k=${parsed.args.top_k})` }
+    } catch {
+      return { ok: false, msg: 'Invalid JSON — model output must be parseable.' }
+    }
+  }, [raw])
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <p className="text-xs font-mono text-slate-500">Expected schema: {schema}</p>
+      <textarea
+        value={raw}
+        onChange={(e) => setRaw(e.target.value)}
+        rows={4}
+        className="w-full rounded-md border border-slate-300 dark:border-slate-700 bg-transparent p-2 font-mono text-xs"
+      />
+      <p className={`text-sm font-semibold ${result.ok ? 'text-teal-700' : 'text-red-600'}`}>{result.msg}</p>
+    </div>
+  )
+}
+
+/** Multi-agent router */
+export function MultiAgentLab() {
+  const agents = [
+    { id: 'router', label: 'Router', color: 'bg-pink-500' },
+    { id: 'retriever', label: 'Retriever', color: 'bg-violet-500' },
+    { id: 'writer', label: 'Writer', color: 'bg-blue-500' },
+    { id: 'critic', label: 'Critic', color: 'bg-amber-500' },
+  ]
+  const [goal, setGoal] = useState('Summarize the latest invoice extraction errors')
+  const [path, setPath] = useState<string[]>([])
+  const [running, setRunning] = useState(false)
+
+  useEffect(() => {
+    if (!running) return
+    const steps = ['router', 'retriever', 'writer', 'critic', 'router']
+    let i = 0
+    setPath([])
+    const t = setInterval(() => {
+      if (i >= steps.length) {
+        setRunning(false)
+        clearInterval(t)
+        return
+      }
+      setPath((p) => [...p, steps[i]])
+      i += 1
+    }, 700)
+    return () => clearInterval(t)
+  }, [running])
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <label className="block text-xs">
+        Goal
+        <input value={goal} onChange={(e) => setGoal(e.target.value)} className="mt-1 w-full rounded-md border bg-transparent px-2 py-1.5 text-sm" />
+      </label>
+      <button
+        type="button"
+        className="rounded-md bg-pink-600 text-white px-3 py-1.5 text-xs"
+        onClick={() => setRunning(true)}
+      >
+        Run multi-agent handoff
+      </button>
+      <div className="flex flex-wrap gap-2">
+        {agents.map((a) => (
+          <div
+            key={a.id}
+            className={`rounded-lg px-3 py-2 text-xs text-white ${a.color} ${
+              path[path.length - 1] === a.id ? 'ring-2 ring-offset-2 ring-slate-900 dark:ring-white scale-105' : 'opacity-70'
+            }`}
+          >
+            {a.label}
+          </div>
+        ))}
+      </div>
+      <p className="text-sm text-slate-600 dark:text-slate-400">
+        Handoff path: {path.length ? path.join(' → ') : 'idle'} · Goal: “{goal}”
+      </p>
+    </div>
+  )
+}
+
+/** Celery queue depth simulator */
+export function CeleryQueueLab() {
+  const [rate, setRate] = useState(8)
+  const [workers, setWorkers] = useState(2)
+  const [queue, setQueue] = useState(12)
+  const [done, setDone] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setQueue((q) => Math.max(0, q + rate - workers * 3))
+      setDone((d) => d + Math.min(workers * 3, rate + 5))
+    }, 800)
+    return () => clearInterval(t)
+  }, [rate, workers])
+
+  const healthy = queue < 40
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <div className="grid sm:grid-cols-2 gap-3 text-xs">
+        <label>
+          Ingest rate (docs/tick): {rate}
+          <input type="range" min={1} max={20} value={rate} onChange={(e) => setRate(Number(e.target.value))} className="w-full" />
+        </label>
+        <label>
+          Celery workers: {workers}
+          <input type="range" min={1} max={10} value={workers} onChange={(e) => setWorkers(Number(e.target.value))} className="w-full" />
+        </label>
+      </div>
+      <div className="h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div className={`h-full transition-all ${healthy ? 'bg-emerald-600' : 'bg-red-500'}`} style={{ width: `${Math.min(100, queue)}%` }} />
+      </div>
+      <p className="text-sm">
+        Queue depth <strong>{queue}</strong> · Processed ~<strong>{done}</strong>{' '}
+        <span className={healthy ? 'text-teal-700' : 'text-red-600 font-semibold'}>
+          {healthy ? '· Keeping up' : '· Backpressure — add workers or shed load'}
+        </span>
+      </p>
+      <button type="button" className="rounded-md border px-3 py-1.5 text-xs" onClick={() => { setQueue(0); setDone(0) }}>
+        Reset
+      </button>
+    </div>
+  )
+}
+
+/** HITL review board */
+export function HitlLab() {
+  const [items, setItems] = useState([
+    { id: 1, field: 'invoice_total', value: '€12,400', conf: 0.61, status: 'pending' as 'pending' | 'approved' | 'rejected' },
+    { id: 2, field: 'vendor_name', value: 'Acme GmbH', conf: 0.94, status: 'pending' as const },
+    { id: 3, field: 'po_number', value: 'PO-8891', conf: 0.72, status: 'pending' as const },
+  ])
+
+  const act = (id: number, status: 'approved' | 'rejected') => {
+    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, status } : it)))
+  }
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <p className="text-sm text-slate-600 dark:text-slate-400">Low-confidence fields need a human before SENT locks.</p>
+      {items.map((it) => (
+        <div key={it.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm">
+          <div className="flex-1 min-w-[140px]">
+            <div className="font-semibold">{it.field}</div>
+            <div className="text-xs text-slate-500">{it.value} · conf {(it.conf * 100).toFixed(0)}%</div>
+          </div>
+          {it.status === 'pending' ? (
+            <div className="flex gap-2">
+              <button type="button" onClick={() => act(it.id, 'approved')} className="rounded-md bg-teal-700 text-white px-2 py-1 text-xs">
+                Approve
+              </button>
+              <button type="button" onClick={() => act(it.id, 'rejected')} className="rounded-md border border-red-400 text-red-600 px-2 py-1 text-xs">
+                Reject
+              </button>
+            </div>
+          ) : (
+            <span className={`text-xs font-semibold uppercase ${it.status === 'approved' ? 'text-teal-700' : 'text-red-600'}`}>
+              {it.status}{it.status === 'approved' ? ' · locked' : ''}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** AES toy — scramble/unscramble demo (teaching only) */
+export function EncryptionLab() {
+  const [plain, setPlain] = useState('contract.pdf bytes…')
+  const [key, setKey] = useState('vault-key')
+  const cipher = useMemo(() => {
+    const out: number[] = []
+    for (let i = 0; i < plain.length; i++) {
+      out.push(plain.charCodeAt(i) ^ key.charCodeAt(i % key.length) ^ 0x5a)
+    }
+    return out.map((n) => n.toString(16).padStart(2, '0')).join('')
+  }, [plain, key])
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <p className="text-xs text-slate-500">Teaching demo only (XOR), inspired by BitVault’s encrypt-before-store idea — not real AES.</p>
+      <label className="block text-xs">
+        Plaintext
+        <input value={plain} onChange={(e) => setPlain(e.target.value)} className="mt-1 w-full rounded-md border bg-transparent px-2 py-1.5" />
+      </label>
+      <label className="block text-xs">
+        Password-derived key material
+        <input value={key} onChange={(e) => setKey(e.target.value)} className="mt-1 w-full rounded-md border bg-transparent px-2 py-1.5" />
+      </label>
+      <pre className="text-xs rounded-md bg-slate-100 dark:bg-slate-800 p-3 overflow-auto break-all">{cipher || '—'}</pre>
+    </div>
+  )
+}
+
+/** Rate limiter for multi-tenant SaaS */
+export function RateLimitLab() {
+  const [limit, setLimit] = useState(5)
+  const [counts, setCounts] = useState({ a: 0, b: 0 })
+  const [log, setLog] = useState<string[]>([])
+
+  const hit = (tenant: 'a' | 'b') => {
+    setCounts((c) => {
+      const next = c[tenant] + 1
+      const ok = next <= limit
+      setLog((l) => [`tenant-${tenant}: ${ok ? 'OK' : '429 Too Many Requests'} (${next}/${limit})`, ...l].slice(0, 6))
+      return { ...c, [tenant]: next }
+    })
+  }
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <label className="block text-xs">
+        Per-tenant limit: {limit}
+        <input type="range" min={2} max={12} value={limit} onChange={(e) => setLimit(Number(e.target.value))} className="w-full" />
+      </label>
+      <div className="flex gap-2">
+        <button type="button" onClick={() => hit('a')} className="rounded-md bg-blue-600 text-white px-3 py-1.5 text-xs">
+          Call as tenant-A ({counts.a})
+        </button>
+        <button type="button" onClick={() => hit('b')} className="rounded-md bg-indigo-600 text-white px-3 py-1.5 text-xs">
+          Call as tenant-B ({counts.b})
+        </button>
+        <button type="button" onClick={() => { setCounts({ a: 0, b: 0 }); setLog([]) }} className="rounded-md border px-3 py-1.5 text-xs">
+          Reset window
+        </button>
+      </div>
+      <ul className="text-xs space-y-1 text-slate-600 dark:text-slate-400">
+        {log.map((line, i) => (
+          <li key={i}>{line}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/** Wallet / ledger demo */
+export function WalletLab() {
+  const [balance, setBalance] = useState(500)
+  const [log, setLog] = useState<string[]>(['wallet opened · ₹500'])
+
+  const charge = (mins: number) => {
+    const cost = mins * 20
+    if (balance < cost) {
+      setLog((l) => [`DENIED · need ₹${cost}, have ₹${balance}`, ...l].slice(0, 8))
+      return
+    }
+    setBalance((b) => b - cost)
+    setLog((l) => [`session ${mins}m · −₹${cost} · ledger ok`, ...l].slice(0, 8))
+  }
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <p className="text-2xl font-semibold tabular-nums">₹{balance}</p>
+      <p className="text-xs text-slate-500">HNL-style pay-per-minute: wallet must cover the session before connect.</p>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={() => charge(1)} className="rounded-md bg-emerald-700 text-white px-3 py-1.5 text-xs">1 min (₹20)</button>
+        <button type="button" onClick={() => charge(5)} className="rounded-md bg-emerald-700 text-white px-3 py-1.5 text-xs">5 min (₹100)</button>
+        <button type="button" onClick={() => { setBalance((b) => b + 200); setLog((l) => ['top-up +₹200', ...l].slice(0, 8)) }} className="rounded-md border px-3 py-1.5 text-xs">
+          Top up ₹200
+        </button>
+      </div>
+      <ul className="text-xs space-y-1">{log.map((line, i) => <li key={i}>{line}</li>)}</ul>
+    </div>
+  )
+}
+
+/** API status playground */
+export function ApiDesignLab() {
+  const [method, setMethod] = useState('POST')
+  const [path, setPath] = useState('/api/documents/')
+  const [exists, setExists] = useState(false)
+  const status = useMemo(() => {
+    if (method === 'GET' && path.includes('999')) return { code: 404, why: 'Resource not found' }
+    if (method === 'POST' && exists) return { code: 409, why: 'Conflict — duplicate idempotency key' }
+    if (method === 'POST') return { code: 201, why: 'Created' }
+    if (method === 'GET') return { code: 200, why: 'OK with paginated results' }
+    if (method === 'DELETE') return { code: 204, why: 'No Content' }
+    return { code: 405, why: 'Method not allowed' }
+  }, [method, path, exists])
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
+      <div className="flex flex-wrap gap-2">
+        {['GET', 'POST', 'DELETE'].map((m) => (
+          <button key={m} type="button" onClick={() => setMethod(m)} className={`rounded-md px-3 py-1.5 text-xs ${method === m ? 'bg-slate-900 text-white dark:bg-teal-700' : 'border'}`}>
+            {m}
+          </button>
+        ))}
+      </div>
+      <input value={path} onChange={(e) => setPath(e.target.value)} className="w-full rounded-md border bg-transparent px-2 py-1.5 font-mono text-sm" />
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={exists} onChange={(e) => setExists(e.target.checked)} />
+        Simulate duplicate create
+      </label>
+      <p className="text-lg font-semibold">
+        HTTP {status.code} <span className="text-sm font-normal text-slate-500">— {status.why}</span>
+      </p>
+    </div>
+  )
+}
+
 /** HMAC toy */
 export function HmacLab() {
   const [secret, setSecret] = useState('supedio-dev')
@@ -758,8 +1074,11 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
       />
     )
   }
+  if (track.id === 'agentic-ai' && sub.id === 'tool-use') return <ToolCallLab />
+  if (track.id === 'agentic-ai' && sub.id === 'multi-agent') return <MultiAgentLab />
   if (track.id === 'agentic-ai') return <AgentLoopLab />
   if (track.id === 'security' && sub.id === 'hmac-licensing') return <HmacLab />
+  if (track.id === 'security' && sub.id === 'encryption') return <EncryptionLab />
   if (track.id === 'security' && sub.id === 'enterprise-channels') {
     return (
       <PipelineLab
@@ -773,21 +1092,52 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
       />
     )
   }
-  if (track.id === 'backend' && (sub.id === 'celery-redis' || sub.id === 'auth-payments')) {
+  if (track.id === 'system-design' && sub.id === 'multi-tenant') return <RateLimitLab />
+  if (track.id === 'system-design' && sub.id === 'api-design') return <ApiDesignLab />
+  if (track.id === 'system-design' && sub.id === 'databases') {
     return (
-      <PipelineLab
-        title={sub.title}
-        stages={sub.concepts.map((c, i) => ({
-          id: String(i),
-          label: c,
-          detail:
-            sub.id === 'auth-payments'
-              ? `Marketplace pattern (HNL): wallet/ledger thinking for “${c}".`
-              : `Async platform pattern: “${c}" as used with Celery + Redis in document pipelines.`,
-        }))}
+      <CompareLab
+        left={{
+          title: 'Row store (Postgres)',
+          points: ['Transactions / joins', 'B-tree indexes', 'Great for SaaS source of truth', 'Add pgvector when you need similarity'],
+        }}
+        right={{
+          title: 'Vector index',
+          points: ['ANN search (HNSW/IVF)', 'Metadata filters', 'Pinecone or pgvector', 'Pair with hybrid BM25 for keywords'],
+        }}
       />
     )
   }
+  if (track.id === 'backend' && sub.id === 'celery-redis') return <CeleryQueueLab />
+  if (track.id === 'backend' && sub.id === 'auth-payments') return <WalletLab />
+  if (track.id === 'backend' && sub.id === 'python-apis') {
+    return (
+      <CompareLab
+        left={{
+          title: 'Django / DRF',
+          points: ['Batteries-included admin', 'ORM + migrations', 'Great for document SaaS monoliths', 'DRF serializers + permissions'],
+        }}
+        right={{
+          title: 'FastAPI',
+          points: ['Native async', 'OpenAPI from types', 'Lean microservices / AI sidecars', 'HNL & video-factory style APIs'],
+        }}
+      />
+    )
+  }
+  if (track.id === 'backend' && sub.id === 'realtime') {
+    return (
+      <PipelineLab
+        title="Realtime feed loop"
+        stages={[
+          { id: '1', label: 'Connect', detail: 'Client opens WebSocket (Binance-style market feed pattern).' },
+          { id: '2', label: 'Subscribe', detail: 'Subscribe to channels; server fans out via pub/sub (Redis).' },
+          { id: '3', label: 'Tick', detail: 'Messages stream in; UI updates without polling.' },
+          { id: '4', label: 'Reconnect', detail: 'Backoff + resume cursors when the socket drops.' },
+        ]}
+      />
+    )
+  }
+  if (track.id === 'ai-ops' && (sub.id === 'hitl' || sub.id === 'extraction-quality')) return <HitlLab />
   if (track.id === 'ai-ops') {
     return (
       <PipelineLab
@@ -799,6 +1149,67 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
           { id: '4', label: 'Lock after SENT', detail: 'Accepted results lock to prevent silent drift.' },
           { id: '5', label: 'Deliver / retain', detail: 'Channel delivery, then retention/export/purge policy.' },
         ]}
+      />
+    )
+  }
+  if (track.id === 'cloud' && sub.id === 'edge') {
+    return (
+      <CompareLab
+        left={{
+          title: 'Origin (AWS region)',
+          points: ['Full Postgres / Celery', 'Heavier compute', 'Best for document pipelines', 'Higher round-trip from some users'],
+        }}
+        right={{
+          title: 'Edge (Workers / R2)',
+          points: ['Low latency near users', 'Great for media (R2)', 'D1 for light state', 'Hloop Connect media path'],
+        }}
+      />
+    )
+  }
+  if (track.id === 'docker' && sub.id === 'containers') {
+    return (
+      <PipelineLab
+        title="Container lifecycle"
+        stages={[
+          { id: '1', label: 'Image', detail: 'Immutable filesystem layers from a Dockerfile.' },
+          { id: '2', label: 'Create', detail: 'Namespaces + cgroups wrap a process with env, ports, mounts.' },
+          { id: '3', label: 'Run', detail: 'Map ports, inject secrets via env/files — never bake them into layers.' },
+          { id: '4', label: 'Health', detail: 'HEALTHCHECK / orchestrator probes decide restart vs traffic.' },
+        ]}
+      />
+    )
+  }
+  if (track.id === 'kubernetes' && sub.id === 'helm-kubectl') {
+    return (
+      <QuizLab
+        questions={[
+          {
+            q: 'What does `kubectl rollout undo deploy/api` do?',
+            options: ['Rolls back to the previous ReplicaSet', 'Deletes the cluster', 'Builds a new image', 'Opens a shell'],
+            answer: 0,
+            explain: 'Deployments keep revision history — undo restores the prior template.',
+          },
+          {
+            q: 'Why use Helm values overlays?',
+            options: ['Same chart, different env config', 'To avoid Kubernetes entirely', 'To store secrets in git plaintext', 'To disable health probes'],
+            answer: 0,
+            explain: 'Charts + values let staging/prod share templates safely.',
+          },
+        ]}
+      />
+    )
+  }
+  if (track.id === 'rag' && sub.id === 'rag-overview') {
+    return (
+      <CompareLab
+        left={{
+          title: 'Prompt-only LLM',
+          points: ['Fast to try', 'Hallucinates on private data', 'No citations', 'Stale knowledge cutoff'],
+        }}
+        right={{
+          title: 'RAG',
+          points: ['Grounds answers in your docs', 'Needs chunking + retrieval', 'Measurable with evals', 'How Document Similarity + EPIC work'],
+        }}
       />
     )
   }

@@ -25,10 +25,10 @@ export default function Home() {
             Avinash Ranjan
           </p>
           <h1 className="mt-4 max-w-3xl font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.08] text-slate-900 dark:text-white">
-            Six years of shipping — taught as interactive labs.
+            Learn by clicking around.
           </h1>
           <p className="mt-5 max-w-xl text-lg text-slate-700 dark:text-slate-300">
-            Learn DSA, system design, RAG, agents, cloud, Docker, and Kubernetes the way they show up in production SaaS.
+            Interactive lessons on DSA, system design, RAG, agents, cloud, Docker, and Kubernetes — the stuff I actually use at work.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -41,7 +41,7 @@ export default function Home() {
               to="/about"
               className="rounded-md border border-slate-400/70 dark:border-slate-600 px-5 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-200"
             >
-              About the instructor
+              About me
             </Link>
           </div>
         </div>
@@ -79,7 +79,8 @@ export default function Home() {
               <span className="mt-1 h-2.5 w-2.5 rounded-full shrink-0" style={{ background: track.accent }} />
               <div>
                 <div className="font-medium">{track.title}</div>
-                <div className="text-xs text-slate-500">{track.subtopics.map((s) => s.title).slice(0, 4).join(' · ')}
+                <div className="text-xs text-slate-500">
+                  {track.subtopics.map((s) => s.title).slice(0, 4).join(' · ')}
                   {track.subtopics.length > 4 ? '…' : ''}
                 </div>
               </div>

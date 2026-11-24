@@ -1,55 +1,67 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 
 const Projects = () => {
   const projects = [
     {
-      title: 'EPIC Email Agent (DLAI)',
-      description: 'Enterprise AI solution automating document processing with LLMs and vector databases. Reduced manual processing time by 85% and improved accuracy to 98%',
-      technologies: ['Django', 'AI/ML', 'LLM', 'Vector Search', 'PostgreSQL'],
+      title: 'EPIC / DTC — Document Processor',
+      description:
+        'Production AI pipeline extracting key-value data from complex enterprise PDFs; 1,000+ docs/day with async queues, AI evals, HITL, ERP/channel delivery, cloud + on-prem.',
+      technologies: ['Django', 'Celery', 'LangChain', 'SAP', 'EKS Fargate'],
       category: 'AI/ML',
     },
     {
       title: 'Document Similarity Engine',
-      description: 'Scalable intelligence platform processing 2000+ documents using advanced vector embeddings. Enabled 10x faster document matching and discovery',
-      technologies: ['Python', 'Django', 'PostgreSQL', 'HNSWlib', 'OpenAI', 'AWS Bedrock'],
+      description:
+        'Upload/search/compare API for PDF, images, Word, CSV with vector embeddings, OCR, API-key limits — sub-200ms queries on large corpora.',
+      technologies: ['Django REST', 'pgvector', 'Tesseract', 'OpenAPI'],
       category: 'AI/ML',
+      link: 'https://github.com/avi9r/document_similarity',
     },
     {
-      title: 'Digital Transformation Centre',
-      description: 'Enterprise automation platform streamlining workflows across multiple channels. Increased operational efficiency by 60% for client organizations',
-      technologies: ['Django', 'PostgreSQL', 'RESTful APIs'],
+      title: 'Human in Loop Marketplace',
+      description:
+        'Pay-per-minute consultancy: wallet/ledger, subscriptions, session chat, bilingual web UI, native mobile with social feed.',
+      technologies: ['Next.js 14', 'FastAPI', 'Expo', 'Razorpay'],
       category: 'Full-Stack',
+      link: 'https://github.com/avi9r/HNL_frontend',
     },
     {
-      title: 'Bit_Vault',
-      description: 'Enterprise-grade secure file management system with advanced encryption. Trusted by organizations for handling sensitive business documents',
-      technologies: ['Python', 'Django', 'PostgreSQL', 'Encryption'],
+      title: 'BitVault + blackbox-logger',
+      description:
+        'AES-256 CLI vault for files/text, plus a PyPI request/response logger with sensitive-field masking for secure audits.',
+      technologies: ['Python', 'AES-256', 'PostgreSQL', 'PyPI'],
+      category: 'Tools',
+      link: 'https://github.com/avi9r/bitvault',
+    },
+    {
+      title: 'Hloop Connect',
+      description:
+        'Privacy-first activity-led dating product: Expo Dev Client, typed API contracts, Supabase, Cloudflare R2 media.',
+      technologies: ['Expo', 'Fastify', 'Supabase', 'Cloudflare R2'],
+      category: 'Full-Stack',
+      link: 'https://github.com/avi9r/Hloop_connect',
+    },
+    {
+      title: 'YouTube Video Factory',
+      description:
+        'Faceless YouTube automation: script → AI images → Ken Burns, captions, thumbnails, YAML channel configs, review dashboard.',
+      technologies: ['FastAPI', 'Next.js', 'FFmpeg', 'Groq', 'FAL'],
+      category: 'AI/ML',
+      link: 'https://github.com/avi9r/video-factory',
+    },
+    {
+      title: 'Supedio Licensing Server',
+      description:
+        'Multi-tenant on-prem licensing: validation, revocation, heartbeats, audit logging, HMAC-signed anti-tampering responses.',
+      technologies: ['Django', 'Celery', 'Redis', 'HMAC'],
       category: 'Backend',
     },
     {
-      title: 'Blackbox Logger',
-      description: 'Enterprise logging solution ensuring compliance and security. Widely adopted Python package with intelligent data masking for production environments',
-      technologies: ['Python', 'Django', 'Flask', 'PyPI'],
-      category: 'Tools',
-    },
-    {
-      title: 'EPIC (DLAI)',
-      description: 'Advanced document intelligence platform with precision annotation. Achieved 95%+ accuracy in automated data extraction, transforming document workflows',
-      technologies: ['Django', 'JavaScript', 'jQuery', 'PostgreSQL', 'HTMX'],
-      category: 'Full-Stack',
-    },
-    {
-      title: 'Lead Management System',
-      description: 'Comprehensive CRM platform managing multi-bank credit applications. Delivered real-time analytics and streamlined approval processes',
-      technologies: ['React.js', 'Laravel', 'MySQL', 'JavaScript'],
-      category: 'Full-Stack',
-    },
-    {
-      title: 'House Price Prediction',
-      description: 'ML-powered analytics platform providing accurate property valuations. Enabled data-driven decision making for real estate stakeholders',
-      technologies: ['Jupyter Notebook', 'Flask', 'AI/ML', 'JavaScript'],
-      category: 'Data Science',
+      title: 'On-Prem Deployment Packages',
+      description:
+        'Customer-facing Docker Compose bundles with install scripts, ops runbooks, backups/restarts for DTC + EPIC Live.',
+      technologies: ['Docker Compose', 'Runbooks', 'SharePoint'],
+      category: 'DevOps',
     },
   ]
 
@@ -57,9 +69,9 @@ const Projects = () => {
     const colors = {
       'AI/ML': 'from-purple-500 to-pink-500',
       'Full-Stack': 'from-blue-500 to-cyan-500',
-      'Backend': 'from-green-500 to-emerald-500',
-      'Tools': 'from-orange-500 to-red-500',
-      'Data Science': 'from-indigo-500 to-purple-500',
+      Backend: 'from-green-500 to-emerald-500',
+      Tools: 'from-orange-500 to-red-500',
+      DevOps: 'from-indigo-500 to-blue-500',
     }
     return colors[category] || 'from-gray-500 to-gray-600'
   }
@@ -75,92 +87,53 @@ const Projects = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Innovation <span className="gradient-text">Portfolio</span>
+            Selected <span className="gradient-text">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8" />
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Solutions that drive business transformation and measurable impact
+            Work that shows up as “from production” notes inside the lessons
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30, rotateX: -15 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                y: -10, 
-                scale: 1.02,
-                transition: { duration: 0.2 }
-              }}
-              className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all overflow-hidden relative group perspective-1000 interactive"
-              style={{ transformStyle: 'preserve-3d' }}
+              transition={{ delay: index * 0.08, type: 'spring', stiffness: 100 }}
+              whileHover={{ y: -10, scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all overflow-hidden relative group interactive"
             >
-              {/* Animated gradient background */}
-              <motion.div 
-                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${getCategoryColor(project.category)} opacity-10 rounded-bl-full`}
-                animate={{
-                  scale: [1, 1.15, 1],
-                  rotate: [0, 90, 180],
-                }}
-                transition={{
-                  duration: 15,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              {/* Glow effect on hover */}
-              <motion.div
-                className={`absolute inset-0 bg-gradient-to-br ${getCategoryColor(project.category)} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`}
-              />
-              
+              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${getCategoryColor(project.category)}`} />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-3">
-                  <motion.span 
-                    className={`px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r ${getCategoryColor(project.category)} text-white shadow-lg`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                  >
-                    {project.category}
-                  </motion.span>
-                </div>
-                
-                <motion.h3 
-                  className="text-xl font-bold mb-3 text-gray-800 dark:text-gray-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all"
-                >
-                  {project.title}
-                </motion.h3>
-                
-                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.slice(0, 4).map((tech, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 + i * 0.05 }}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      className="px-2 py-1 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs cursor-default"
+                <span className="text-xs font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-400">
+                  {project.category}
+                </span>
+                <h3 className="text-xl font-bold mt-2 mb-3 text-gray-800 dark:text-gray-100">{project.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-1 text-xs rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600"
                     >
                       {tech}
-                    </motion.span>
+                    </span>
                   ))}
-                  {project.technologies.length > 4 && (
-                    <motion.span 
-                      className="px-2 py-1 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      +{project.technologies.length - 4}
-                    </motion.span>
-                  )}
                 </div>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    View on GitHub →
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
@@ -171,4 +144,3 @@ const Projects = () => {
 }
 
 export default Projects
-

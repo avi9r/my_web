@@ -1,43 +1,37 @@
 import { motion } from 'framer-motion'
-import { FaCode, FaBrain, FaRocket, FaRobot } from 'react-icons/fa'
+import { FaBrain, FaRocket, FaCode } from 'react-icons/fa'
+import { FaDownload, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 const About = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   }
 
   const itemVariants = {
     hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   }
 
   const features = [
     {
       icon: <FaBrain className="text-3xl" />,
-      title: 'AI Innovation Leadership',
-      description: 'Pioneering AI solutions with LLMs, RAG systems, and vector embeddings. Delivering enterprise-grade intelligent automation that transforms business operations',
+      title: 'AI systems in production',
+      description:
+        'RAG, LangChain, pgvector, HITL review, and AI eval gates on real document pipelines — not demos.',
     },
     {
       icon: <FaRocket className="text-3xl" />,
-      title: 'Strategic Technology Execution',
-      description: 'Building scalable, production-ready systems with modern architectures. From concept to deployment, delivering solutions that drive business value',
+      title: 'Product end-to-end',
+      description:
+        'APIs, async workers, payments, mobile clients, and customer workflows from requirements to release.',
     },
     {
       icon: <FaCode className="text-3xl" />,
-      title: 'Cloud-First Architecture',
-      description: 'Designing and deploying enterprise solutions with Docker, Kubernetes, and AWS. Ensuring scalability, reliability, and optimal performance',
+      title: 'Cloud & containers',
+      description:
+        'Docker → ECR → EKS Fargate, plus on-prem Compose packages when customers need control of their infra.',
     },
   ]
 
@@ -52,12 +46,43 @@ const About = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Vision & <span className="gradient-text">Mission</span>
+            About <span className="gradient-text">Me</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12">
-            Transforming businesses through AI innovation and strategic technology leadership
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8" />
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
+            Product engineer with 6 years building production SaaS — APIs, AI document systems, cloud, and on-prem delivery.
           </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href="/Avinash_Ranjan_Resume_2026.pdf"
+              download
+              className="interactive inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg hover:shadow-xl"
+            >
+              <FaDownload /> Resume
+            </a>
+            <a
+              href="https://github.com/avi9r"
+              target="_blank"
+              rel="noreferrer"
+              className="interactive inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold shadow"
+            >
+              <FaGithub /> GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/avinashranjan9"
+              target="_blank"
+              rel="noreferrer"
+              className="interactive inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold shadow"
+            >
+              <FaLinkedin /> LinkedIn
+            </a>
+            <Link
+              to="/learn/dsa"
+              className="interactive inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-blue-500/40 text-blue-700 dark:text-blue-300 font-semibold"
+            >
+              Browse lessons
+            </Link>
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -69,33 +94,26 @@ const About = () => {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                My Vision
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Who I am</h3>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                To democratize <strong className="text-purple-600 dark:text-purple-400">AI-powered solutions</strong> and make intelligent automation 
-                accessible to businesses of all sizes. I believe in building technology that doesn't just solve problems, 
-                but creates new opportunities and competitive advantages.
+                I am <strong className="text-purple-600 dark:text-purple-400">Avinash Ranjan</strong>, based in Kolkata.
+                I ship features from stakeholder requirements through AWS production — comfortable owning the messy middle
+                between product, AI, and ops.
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                The Mission
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">What I work on</h3>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                Leading innovation in <strong className="text-purple-600 dark:text-purple-400">AI/ML technologies</strong> including Large Language Models, 
-                RAG systems, and vector embeddings. Architecting solutions that process thousands of documents, 
-                automate complex workflows, and deliver measurable business impact.
+                At <strong>DeepLogic AI (DLAI)</strong> I build document-automation SaaS for German enterprises:
+                extraction, RAG similarity across 30,000+ documents, HITL review, and multi-channel delivery
+                (SAP, Microsoft Graph, SFTP, SMTP).
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                Impact & Leadership
-              </h3>
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Why this site exists</h3>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                Currently leading technology initiatives at <strong>DLAI (DeepLogic AI)</strong>, where I design and implement 
-                enterprise-grade AI solutions. Specializing in scalable cloud infrastructure with <strong>Docker</strong> and 
-                <strong>Kubernetes</strong>, delivering production-ready systems that drive business growth.
+                These lessons mirror how I learned on the job — visual, interactive, and tied to real systems —
+                so visitors can practice the same ideas without the jargon wall.
               </p>
             </div>
           </motion.div>
@@ -109,60 +127,32 @@ const About = () => {
           >
             {features.map((feature, index) => (
               <motion.div
-                key={index}
+                key={feature.title}
                 variants={itemVariants}
                 className={`p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg hover:shadow-2xl transition-all relative overflow-hidden group interactive ${
                   index === 0 ? 'ring-2 ring-purple-500/30 dark:ring-purple-400/30' : ''
                 }`}
-                whileHover={{ 
-                  scale: 1.03, 
-                  y: -5,
-                  transition: { duration: 0.2 }
-                }}
-                style={{ transformStyle: 'preserve-3d' }}
+                whileHover={{ scale: 1.03, y: -5, transition: { duration: 0.2 } }}
               >
-                {/* Animated gradient background */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${
-                    index === 0 
-                      ? 'from-purple-500/20 to-pink-500/20' 
-                      : 'from-blue-500/20 to-cyan-500/20'
+                    index === 0 ? 'from-purple-500/20 to-pink-500/20' : 'from-blue-500/20 to-cyan-500/20'
                   } opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl`}
                 />
-                
                 <div className="relative z-10 flex items-start gap-4">
-                  <motion.div 
+                  <motion.div
                     className={`p-3 rounded-lg ${
-                      index === 0 
-                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' 
+                      index === 0
+                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
                         : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                     }`}
-                    whileHover={{ 
-                      scale: 1.2, 
-                      rotate: 360,
-                      transition: { duration: 0.5 }
-                    }}
-                    animate={{
-                      y: [0, -5, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: index * 0.3
-                    }}
+                    whileHover={{ scale: 1.2, rotate: 360, transition: { duration: 0.5 } }}
                   >
                     {feature.icon}
                   </motion.div>
                   <div>
-                    <motion.h3 
-                      className="text-xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {feature.title}
-                    </motion.h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      {feature.description}
-                    </p>
+                    <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-gray-200">{feature.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
                   </div>
                 </div>
               </motion.div>
