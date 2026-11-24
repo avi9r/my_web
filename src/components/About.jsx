@@ -19,7 +19,7 @@ const About = () => {
       icon: <FaBrain className="text-3xl" />,
       title: 'AI systems in production',
       description:
-        'RAG, LangChain, pgvector, HITL review, and AI eval gates on real document pipelines — not demos.',
+        'RAG, LangChain, pgvector, and AI eval gates on real document pipelines — not demos.',
     },
     {
       icon: <FaRocket className="text-3xl" />,
@@ -105,7 +105,7 @@ const About = () => {
               <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">What I work on</h3>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 At <strong>DeepLogic AI (DLAI)</strong> I build document-automation SaaS for German enterprises:
-                extraction, RAG similarity across 30,000+ documents, HITL review, and multi-channel delivery
+                extraction, RAG similarity across 30,000+ documents, quality checks, and multi-channel delivery
                 (SAP, Microsoft Graph, SFTP, SMTP).
               </p>
             </div>

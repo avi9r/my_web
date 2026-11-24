@@ -363,7 +363,7 @@ export function CacheLab() {
 /** Chunking visualizer */
 export function ChunkingLab() {
   const [text, setText] = useState(
-    'Enterprise PDFs arrive via SFTP. OCR extracts text. Embeddings land in pgvector. HITL reviewers fix edge cases before SAP delivery.'
+    'Enterprise PDFs arrive via SFTP. OCR extracts text. Embeddings land in pgvector. Reviewers fix edge cases before SAP delivery.'
   )
   const [size, setSize] = useState(40)
   const [overlap, setOverlap] = useState(10)
@@ -653,8 +653,8 @@ export function CeleryQueueLab() {
   )
 }
 
-/** HITL review board */
-export function HitlLab() {
+/** Field-level quality review board (generic eval practice) */
+export function QualityReviewLab() {
   const [items, setItems] = useState([
     { id: 1, field: 'invoice_total', value: '€12,400', conf: 0.61, status: 'pending' as 'pending' | 'approved' | 'rejected' },
     { id: 2, field: 'vendor_name', value: 'Acme GmbH', conf: 0.94, status: 'pending' as const },
@@ -667,7 +667,7 @@ export function HitlLab() {
 
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 p-4 space-y-3">
-      <p className="text-sm text-slate-600 dark:text-slate-400">Low-confidence fields need a human before SENT locks.</p>
+      <p className="text-sm text-slate-600 dark:text-slate-400">Low-confidence fields should be checked before results go out.</p>
       {items.map((it) => (
         <div key={it.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm">
           <div className="flex-1 min-w-[140px]">
@@ -685,7 +685,7 @@ export function HitlLab() {
             </div>
           ) : (
             <span className={`text-xs font-semibold uppercase ${it.status === 'approved' ? 'text-teal-700' : 'text-red-600'}`}>
-              {it.status}{it.status === 'approved' ? ' · locked' : ''}
+              {it.status}
             </span>
           )}
         </div>
@@ -1019,12 +1019,12 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
   if (track.id === 'system-design' && (sub.id === 'queues' || sub.id === 'case-document-saas')) {
     return (
       <PipelineLab
-        title="Document SaaS flow (EPIC/DTC)"
+        title="Document SaaS flow"
         stages={[
           { id: 'in', label: 'Ingest', detail: 'Files arrive via upload, SFTP, or email channels.' },
           { id: 'q', label: 'Queue', detail: 'Celery/Redis absorbs bursts — 1,000+ docs/day without blocking APIs.' },
           { id: 'ai', label: 'Extract', detail: 'LLM/OCR pipelines produce structured key-values.' },
-          { id: 'hitl', label: 'HITL', detail: 'Human review locks after SENT; edge cases become acceptance rules.' },
+          { id: 'review', label: 'Review', detail: 'Low-confidence fields get checked; edge cases become acceptance rules.' },
           { id: 'eval', label: 'Eval gate', detail: 'AI evals block bad extractions before delivery.' },
           { id: 'out', label: 'Deliver', detail: 'SAP ERP, Microsoft Graph, SFTP/FTP, SMTP — customer channels.' },
         ]}
@@ -1054,7 +1054,7 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
           { id: 'a', label: 'App service', detail: 'API container (Django/FastAPI) with healthcheck.' },
           { id: 'b', label: 'Worker', detail: 'Celery worker sharing the image, different command.' },
           { id: 'c', label: 'Redis / Postgres', detail: 'Stateful services with volumes and backups called out in the runbook.' },
-          { id: 'd', label: 'Install script', detail: 'Customer-facing install + restart + backup steps (DTC/EPIC style).' },
+          { id: 'd', label: 'Install script', detail: 'Customer-facing install + restart + backup steps for on-prem installs.' },
         ]}
       />
     )
@@ -1137,16 +1137,16 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
       />
     )
   }
-  if (track.id === 'ai-ops' && (sub.id === 'hitl' || sub.id === 'extraction-quality')) return <HitlLab />
+  if (track.id === 'ai-ops' && sub.id === 'extraction-quality') return <QualityReviewLab />
   if (track.id === 'ai-ops') {
     return (
       <PipelineLab
-        title="HITL + eval gate"
+        title="Eval gate flow"
         stages={[
           { id: '1', label: 'Model output', detail: 'Extraction or generation candidate is produced.' },
           { id: '2', label: 'Auto eval', detail: 'Score against golden fields / faithfulness thresholds.' },
-          { id: '3', label: 'HITL queue', detail: 'Failures and low-confidence items go to human review.' },
-          { id: '4', label: 'Lock after SENT', detail: 'Accepted results lock to prevent silent drift.' },
+          { id: '3', label: 'Review queue', detail: 'Failures and low-confidence items get checked before release.' },
+          { id: '4', label: 'Accept / reject', detail: 'Accepted results are finalized; rejects go back for fix.' },
           { id: '5', label: 'Deliver / retain', detail: 'Channel delivery, then retention/export/purge policy.' },
         ]}
       />
@@ -1208,7 +1208,7 @@ export function pickLab(kind: LabKind, track: Track, sub: Subtopic) {
         }}
         right={{
           title: 'RAG',
-          points: ['Grounds answers in your docs', 'Needs chunking + retrieval', 'Measurable with evals', 'How Document Similarity + EPIC work'],
+          points: ['Grounds answers in your docs', 'Needs chunking + retrieval', 'Measurable with evals', 'How Document Similarity engines work'],
         }}
       />
     )

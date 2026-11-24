@@ -71,7 +71,7 @@ export const tracks: Track[] = [
       { id: 'api-design', title: 'API Design', summary: 'REST, OpenAPI, versioning.', concepts: ['Resource modeling', 'Status codes', 'Pagination', 'OpenAPI / Swagger'], lab: 'sandbox' },
       { id: 'multi-tenant', title: 'Multi-tenant SaaS', summary: 'Isolate tenants without drowning in ops.', concepts: ['Shared DB vs schema', 'Row-level isolation', 'Rate limits', 'Licensing'], lab: 'diagram', productionNote: 'Supedio multi-tenant licensing with HMAC heartbeats.' },
       { id: 'observability', title: 'Observability', summary: 'Logs, metrics, traces, blackbox.', concepts: ['Structured logs', 'Metrics / alerts', 'Tracing', 'Request blackbox'], lab: 'diagram', productionNote: 'blackbox-logger (PyPI) for request/response audit trails.' },
-      { id: 'case-document-saas', title: 'Case Study: Document SaaS', summary: 'EPIC/DTC architecture walkthrough.', concepts: ['Ingest → extract → HITL → deliver', 'Cloud + on-prem paths', 'Channel integrations'], lab: 'pipeline', productionNote: 'EPIC / DTC — German enterprise PDF automation.' },
+      { id: 'case-document-saas', title: 'Case Study: Document SaaS', summary: 'End-to-end document automation architecture.', concepts: ['Ingest → extract → review → deliver', 'Cloud + on-prem paths', 'Channel integrations'], lab: 'pipeline', productionNote: 'Document automation SaaS with async pipelines and multi-channel delivery.' },
     ],
   },
   {
@@ -120,11 +120,11 @@ export const tracks: Track[] = [
     subtopics: [
       { id: 'cloud-basics', title: 'Cloud Building Blocks', summary: 'Regions, VPC, identity.', concepts: ['Regions / AZs', 'VPC / subnets', 'IAM / IRSA', 'Secrets Manager'], lab: 'diagram', productionNote: 'AWS test-stack: VPC, EKS, RDS, ElastiCache, S3, IRSA.' },
       { id: 'vertical-horizontal', title: 'Vertical vs Horizontal Scaling', summary: 'Scale up vs scale out.', concepts: ['Vertical limits', 'Horizontal replicas', 'Stateful pitfalls', 'Autoscaling signals'], lab: 'simulator' },
-      { id: 'serverless', title: 'Serverless Containers', summary: 'Fargate-style execution.', concepts: ['No node management', 'Task sizing', 'Cold starts', 'Networking'], lab: 'compare', productionNote: 'ECR → EKS Fargate for DTC cloud path.' },
+      { id: 'serverless', title: 'Serverless Containers', summary: 'Fargate-style execution.', concepts: ['No node management', 'Task sizing', 'Cold starts', 'Networking'], lab: 'compare', productionNote: 'ECR → EKS Fargate for production SaaS workloads.' },
       { id: 'storage', title: 'Object & Managed Storage', summary: 'S3, RDS, MinIO.', concepts: ['S3 lifecycle', 'RDS vs self-host', 'MinIO on-prem', 'Backups'], lab: 'diagram' },
       { id: 'edge', title: 'Edge & Workers', summary: 'Cloudflare Workers, D1, R2.', concepts: ['Workers runtime', 'D1 SQL', 'R2 media', 'When edge wins'], lab: 'compare', productionNote: 'Hloop Connect uses Cloudflare R2 for media.' },
       { id: 'cicd', title: 'CI/CD on Cloud', summary: 'Build once, promote safely.', concepts: ['GitHub Actions', 'Kaniko builds', 'ECR tags', 'Env promotion'], lab: 'pipeline' },
-      { id: 'onprem', title: 'On-prem Packaging', summary: 'Ship the same product offline.', concepts: ['Docker Compose bundles', 'Runbooks', 'Licensing', 'Customer infra'], lab: 'pipeline', productionNote: 'On-prem DTC/EPIC packages + SharePoint delivery.' },
+      { id: 'onprem', title: 'On-prem Packaging', summary: 'Ship the same product offline.', concepts: ['Docker Compose bundles', 'Runbooks', 'Licensing', 'Customer infra'], lab: 'pipeline', productionNote: 'On-prem Docker packages with install scripts and ops runbooks.' },
     ],
   },
   {
@@ -173,14 +173,13 @@ export const tracks: Track[] = [
   },
   {
     id: 'ai-ops',
-    title: 'AI Evals & HITL',
+    title: 'AI Evals',
     tagline: 'Ship AI only when quality is measurable.',
     accent: '#ca8a04',
     path: '/learn/ai-ops',
     subtopics: [
-      { id: 'hitl', title: 'Human-in-the-Loop', summary: 'Humans as quality gates.', concepts: ['Review queues', 'Locks after SENT', 'Escalation', 'UX for reviewers'], lab: 'simulator', productionNote: 'HITL review locks after SENT in EPIC/DTC.' },
       { id: 'eval-gates', title: 'AI Eval Gates', summary: 'Block bad outputs before delivery.', concepts: ['Golden datasets', 'Score thresholds', 'Regression', 'Sampling'], lab: 'pipeline' },
-      { id: 'extraction-quality', title: 'Extraction Quality', summary: 'Key-value accuracy for PDFs.', concepts: ['Field-level metrics', 'Edge cases', 'Acceptance criteria', 'Client rules'], lab: 'quiz', productionNote: 'German enterprise extraction rules & acceptance.' },
+      { id: 'extraction-quality', title: 'Extraction Quality', summary: 'Key-value accuracy for PDFs.', concepts: ['Field-level metrics', 'Edge cases', 'Acceptance criteria', 'Client rules'], lab: 'quiz' },
       { id: 'retention', title: 'Retention & Compliance Flows', summary: 'Export, purge, audit.', concepts: ['Datalake export', 'Purge windows', 'HMAC uploads', 'Audit trails'], lab: 'pipeline' },
     ],
   },
@@ -194,7 +193,7 @@ export const tracks: Track[] = [
       { id: 'secure-defaults', title: 'Secure Defaults', summary: 'Auth lifecycle and headers.', concepts: ['Token lifecycle', 'CSP / cache headers', 'TLS review', 'Least privilege'], lab: 'quiz', productionNote: 'Findings from OWASP Nettacker → remediations.' },
       { id: 'hmac-licensing', title: 'HMAC Licensing', summary: 'Tamper-evident license checks.', concepts: ['HMAC signing', 'Heartbeats', 'Revocation', 'Audit logs'], lab: 'simulator', productionNote: 'Supedio licensing server.' },
       { id: 'encryption', title: 'Encryption at Rest', summary: 'Protect files and secrets.', concepts: ['AES-256', 'IVs', 'Key derivation', 'Secret storage'], lab: 'sandbox', productionNote: 'BitVault — AES-256 vault for files & text.' },
-      { id: 'enterprise-channels', title: 'Enterprise Channels', summary: 'SAP, Graph, SFTP, SMTP.', concepts: ['SAP ERP', 'Microsoft Graph', 'SFTP/FTP', 'SMTP'], lab: 'pipeline', productionNote: 'Multi-channel delivery in DTC/EPIC.' },
+      { id: 'enterprise-channels', title: 'Enterprise Channels', summary: 'SAP, Graph, SFTP, SMTP.', concepts: ['SAP ERP', 'Microsoft Graph', 'SFTP/FTP', 'SMTP'], lab: 'pipeline', productionNote: 'Multi-channel delivery across ERP, email, and file transfers.' },
       { id: 'automation', title: 'Automation Glue', summary: 'n8n, Make, Zapier patterns.', concepts: ['Webhooks', 'Idempotency', 'Retries', 'Observability'], lab: 'diagram' },
     ],
   },

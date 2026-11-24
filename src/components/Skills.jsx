@@ -21,7 +21,7 @@ const Skills = () => {
         { name: 'RAG / Vector Search', icon: <FaBrain />, level: 90 },
         { name: 'LangChain / LlamaIndex', icon: <FaCode />, level: 85 },
         { name: 'LLMs (Claude, GPT)', icon: <SiOpenai />, level: 90 },
-        { name: 'AI Evals / HITL', icon: <FaBrain />, level: 88 },
+        { name: 'AI Evals', icon: <FaBrain />, level: 88 },
       ],
     },
     {

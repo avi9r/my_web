@@ -1,6 +1,6 @@
 # Avinash Ranjan — Learning Portfolio (`my_web`)
 
-Interactive portfolio that teaches from six years of production experience: DSA, system design, RAG, agentic AI, cloud scaling, Docker, Kubernetes, backend platform patterns, AI evals/HITL, and security integrations.
+Interactive portfolio that teaches from production experience: DSA, system design, RAG, agentic AI, cloud scaling, Docker, Kubernetes, backend platform patterns, AI evals, and security integrations.
 
 ## Stack
 

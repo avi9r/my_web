@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 const Projects = () => {
   const projects = [
     {
-      title: 'EPIC / DTC — Document Processor',
+      title: 'Intelligent Document Processor',
       description:
-        'Production AI pipeline extracting key-value data from complex enterprise PDFs; 1,000+ docs/day with async queues, AI evals, HITL, ERP/channel delivery, cloud + on-prem.',
+        'Production AI pipeline extracting key-value data from complex enterprise PDFs; 1,000+ docs/day with async queues, AI evals, ERP/channel delivery, cloud + on-prem.',
       technologies: ['Django', 'Celery', 'LangChain', 'SAP', 'EKS Fargate'],
       category: 'AI/ML',
     },
@@ -18,7 +18,7 @@ const Projects = () => {
       link: 'https://github.com/avi9r/document_similarity',
     },
     {
-      title: 'Human in Loop Marketplace',
+      title: 'Advisor Marketplace',
       description:
         'Pay-per-minute consultancy: wallet/ledger, subscriptions, session chat, bilingual web UI, native mobile with social feed.',
       technologies: ['Next.js 14', 'FastAPI', 'Expo', 'Razorpay'],
@@ -59,7 +59,7 @@ const Projects = () => {
     {
       title: 'On-Prem Deployment Packages',
       description:
-        'Customer-facing Docker Compose bundles with install scripts, ops runbooks, backups/restarts for DTC + EPIC Live.',
+        'Customer-facing Docker Compose bundles with install scripts, ops runbooks, backups, and restarts for on-prem installs.',
       technologies: ['Docker Compose', 'Runbooks', 'SharePoint'],
       category: 'DevOps',
     },

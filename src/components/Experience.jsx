@@ -10,7 +10,7 @@ const Experience = () => {
       description: [
         'Designed and shipped Django REST APIs for document-automation SaaS extracting structured data from enterprise PDFs for German clients.',
         'Built document similarity / RAG (LangChain, embeddings, pgvector) with sub-200ms queries across 30,000+ documents; OCR for PDF, images, Word, CSV.',
-        'Productized Human-in-the-Loop review and AI Eval gates; scaled Celery/Redis to 1,000+ documents/day.',
+        'Productized AI Eval gates and review workflows; scaled Celery/Redis to 1,000+ documents/day.',
         'Multi-channel delivery via SAP ERP, Microsoft Graph, SFTP/FTP, SMTP; releases Docker → ECR → EKS Fargate, plus on-prem packages.',
       ],
       technologies: ['Django', 'Celery', 'Redis', 'PostgreSQL', 'LangChain', 'pgvector', 'AWS EKS', 'Docker'],
