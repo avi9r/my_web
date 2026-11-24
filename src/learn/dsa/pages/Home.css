@@ -1,0 +1,138 @@
+.home-page {
+  width: 100%;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+body.dark-mode .hero-section {
+  background: linear-gradient(135deg, rgba(76, 81, 191, 0.2) 0%, rgba(107, 70, 193, 0.2) 100%);
+}
+
+.hero-section h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  color: #2d3748;
+}
+
+body.dark-mode .hero-section h1 {
+  color: #e2e8f0;
+}
+
+.hero-section p {
+  font-size: 20px;
+  opacity: 0.95;
+  margin-bottom: 30px;
+  color: #4a5568;
+}
+
+body.dark-mode .hero-section p {
+  color: #cbd5e0;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background: white;
+  color: #667eea;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.topic-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 30px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: block;
+}
+
+body.dark-mode .topic-card {
+  background: rgba(45, 55, 72, 0.95);
+  color: #e2e8f0;
+}
+
+.topic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.topic-card-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.topic-card h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+body.dark-mode .topic-card h3 {
+  color: #90cdf4;
+}
+
+.topic-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+body.dark-mode .topic-card p {
+  color: #cbd5e0;
+}
+
+.feature-badge {
+  display: inline-block;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+body.dark-mode .feature-badge {
+  background: rgba(66, 153, 225, 0.2);
+  color: #90cdf4;
+}
+
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 32px;
+  }
+
+  .topics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

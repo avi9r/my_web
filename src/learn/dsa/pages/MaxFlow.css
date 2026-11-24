@@ -1,0 +1,72 @@
+.max-flow-page {
+  width: 100%;
+}
+
+.max-flow-visual {
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+body.dark-mode .max-flow-visual {
+  background: #1a202c;
+}
+
+.flow-graph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  margin-bottom: 20px;
+}
+
+.flow-graph svg {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+body.dark-mode .flow-graph svg {
+  border-color: #4a5568;
+  background: #2d3748;
+}
+
+.flow-capacities {
+  padding: 15px;
+  background: #edf2f7;
+  border-radius: 8px;
+}
+
+body.dark-mode .flow-capacities {
+  background: #2d3748;
+}
+
+.capacity-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.capacity-item {
+  padding: 8px 12px;
+  background: #cbd5e0;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+body.dark-mode .capacity-item {
+  background: #4a5568;
+  color: #e2e8f0;
+}
+
+.capacity-item.highlight {
+  background: #f56565;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(245, 101, 101, 0.5);
+}
+

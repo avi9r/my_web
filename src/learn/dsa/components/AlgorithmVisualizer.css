@@ -1,0 +1,138 @@
+.visualizer-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 20px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.visualizer-panel {
+  background: #f7fafc;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+body.dark-mode .visualizer-panel {
+  background: #1f2937;
+}
+
+.visualizer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.visualizer-description {
+  margin: 4px 0 0;
+  color: #4a5568;
+}
+
+body.dark-mode .visualizer-description {
+  color: #cbd5e0;
+}
+
+.visualizer-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.visualizer-controls button {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  background: #667eea;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.visualizer-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.visualizer-controls button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.visualizer-stage {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+body.dark-mode .visualizer-stage {
+  background: #111827;
+}
+
+.visualizer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+body.dark-mode .visualizer-meta {
+  color: #cbd5e0;
+}
+
+.visualizer-message {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+body.dark-mode .visualizer-message {
+  color: #60a5fa;
+}
+
+.visualizer-code {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  overflow: auto;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.visualizer-code pre {
+  margin: 0;
+  font-family: 'Fira Code', 'Source Code Pro', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.visualizer-code code {
+  display: block;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.visualizer-code code.active-line {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+.code-line-number {
+  opacity: 0.5;
+  margin-right: 8px;
+}
+
+@media (max-width: 1024px) {
+  .visualizer-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+

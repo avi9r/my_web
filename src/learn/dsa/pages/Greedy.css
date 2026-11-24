@@ -1,0 +1,44 @@
+.greedy-page {
+  width: 100%;
+}
+
+/* Reuse styles from DynamicProgramming */
+.key-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.principle-card {
+  background: #f7fafc;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+body.dark-mode .principle-card {
+  background: #1a202c;
+}
+
+.principle-card strong {
+  color: #667eea;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+body.dark-mode .principle-card strong {
+  color: #90cdf4;
+}
+
+.principle-card p {
+  color: #4a5568;
+  margin: 0;
+}
+
+body.dark-mode .principle-card p {
+  color: #cbd5e0;
+}
+
+

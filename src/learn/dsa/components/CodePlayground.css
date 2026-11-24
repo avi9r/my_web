@@ -1,0 +1,83 @@
+.code-playground {
+  background: #1a202c;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.code-editor {
+  width: 100%;
+  min-height: 200px;
+  background: #2d3748;
+  color: #e2e8f0;
+  border: none;
+  border-radius: 6px;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.code-playground-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.code-run-btn {
+  padding: 10px 24px;
+  background: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.code-run-btn:hover {
+  background: #38a169;
+}
+
+.code-playground-controls button:not(.code-run-btn) {
+  padding: 10px 24px;
+  background: #718096;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.code-playground-controls button:not(.code-run-btn):hover {
+  background: #4a5568;
+}
+
+.code-output {
+  margin-top: 15px;
+  padding: 15px;
+  background: #1a202c;
+  border-radius: 6px;
+  color: #68d391;
+  font-family: 'Courier New', monospace;
+  min-height: 50px;
+  white-space: pre-wrap;
+}
+
+.code-error {
+  color: #f56565;
+}
+
+body.dark-mode .code-playground {
+  background: #0f1419;
+}
+
+body.dark-mode .code-editor {
+  background: #1a202c;
+  color: #e2e8f0;
+}
+
+

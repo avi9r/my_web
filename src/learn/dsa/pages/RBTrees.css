@@ -1,0 +1,73 @@
+.rb-trees-page {
+  width: 100%;
+}
+
+.tree-visualization {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.tree-diagram {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+}
+
+body.dark-mode .tree-diagram {
+  background: #1a202c;
+}
+
+.tree-diagram pre {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #2d3748;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+body.dark-mode .tree-diagram pre {
+  color: #e2e8f0;
+}
+
+.tree-explanation {
+  flex: 1;
+  min-width: 250px;
+  padding: 20px;
+  background: #edf2f7;
+  border-radius: 10px;
+}
+
+body.dark-mode .tree-explanation {
+  background: #2d3748;
+}
+
+.tree-explanation p {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+body.dark-mode .tree-explanation p {
+  color: #e2e8f0;
+}
+
+.tree-explanation ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tree-explanation li {
+  margin: 8px 0;
+  color: #4a5568;
+}
+
+body.dark-mode .tree-explanation li {
+  color: #cbd5e0;
+}
+

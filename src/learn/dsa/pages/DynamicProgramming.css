@@ -1,0 +1,81 @@
+.dynamic-programming-page {
+  width: 100%;
+}
+
+.key-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.principle-card {
+  background: #f7fafc;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+body.dark-mode .principle-card {
+  background: #1a202c;
+}
+
+.principle-card strong {
+  color: #667eea;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+body.dark-mode .principle-card strong {
+  color: #90cdf4;
+}
+
+.principle-card p {
+  color: #4a5568;
+  margin: 0;
+}
+
+body.dark-mode .principle-card p {
+  color: #cbd5e0;
+}
+
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.pattern-card {
+  background: #f7fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 3px solid #48bb78;
+}
+
+body.dark-mode .pattern-card {
+  background: #1a202c;
+}
+
+.pattern-card strong {
+  color: #2d3748;
+  display: block;
+  margin-bottom: 8px;
+}
+
+body.dark-mode .pattern-card strong {
+  color: #e2e8f0;
+}
+
+.pattern-card p {
+  color: #4a5568;
+  font-size: 14px;
+  margin: 0;
+}
+
+body.dark-mode .pattern-card p {
+  color: #cbd5e0;
+}
+
+

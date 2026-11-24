@@ -1,0 +1,258 @@
+.linked-lists-page {
+  width: 100%;
+}
+
+.linked-list-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 30px 0;
+  padding: 30px;
+  min-height: 100px;
+}
+
+.linked-node {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s;
+  min-width: 80px;
+}
+
+.linked-node:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.linked-node.highlight {
+  background: #f56565;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.node-value {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.node-pointer {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.node-arrow {
+  color: #4a5568;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+body.dark-mode .node-arrow {
+  color: #718096;
+}
+
+.node-null {
+  color: #a0aec0;
+  font-style: italic;
+  padding: 15px 20px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+body.dark-mode .node-null {
+  color: #718096;
+  background: #2d3748;
+}
+
+.node-input {
+  padding: 10px;
+  border: 2px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100px;
+}
+
+body.dark-mode .node-input {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.info-box {
+  background: #e6fffa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border-left: 4px solid #48bb78;
+  color: #22543d;
+}
+
+body.dark-mode .info-box {
+  background: #22543d;
+  color: #c6f6d5;
+}
+
+.explanation-list {
+  line-height: 2;
+  margin: 15px 0;
+  padding-left: 25px;
+}
+
+.explanation-list li {
+  margin: 8px 0;
+  color: #4a5568;
+}
+
+body.dark-mode .explanation-list li {
+  color: #cbd5e0;
+}
+
+.analogy-box {
+  background: #fef3c7;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  border-left: 4px solid #f59e0b;
+}
+
+body.dark-mode .analogy-box {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.analogy-box h3 {
+  color: #92400e;
+  margin-bottom: 10px;
+}
+
+body.dark-mode .analogy-box h3 {
+  color: #fde68a;
+}
+
+.analogy-box ul {
+  margin-top: 10px;
+  padding-left: 25px;
+}
+
+.visual-diagram {
+  background: #f7fafc;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+body.dark-mode .visual-diagram {
+  background: #1a202c;
+}
+
+.singly-list-demo,
+.doubly-list-demo,
+.circular-list-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 18px;
+  color: #4a5568;
+}
+
+body.dark-mode .singly-list-demo,
+body.dark-mode .doubly-list-demo,
+body.dark-mode .circular-list-demo {
+  color: #cbd5e0;
+}
+
+.node-box {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  min-width: 50px;
+  text-align: center;
+}
+
+.step-list {
+  line-height: 2;
+  margin: 15px 0;
+  padding-left: 25px;
+  color: #4a5568;
+}
+
+body.dark-mode .step-list {
+  color: #cbd5e0;
+}
+
+.step-list li {
+  margin: 8px 0;
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.app-card {
+  background: #f7fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+}
+
+body.dark-mode .app-card {
+  background: #1a202c;
+  border-left-color: #4299e1;
+}
+
+.app-card strong {
+  color: #2d3748;
+  display: block;
+  margin-bottom: 8px;
+}
+
+body.dark-mode .app-card strong {
+  color: #e2e8f0;
+}
+
+.app-card p {
+  color: #4a5568;
+  font-size: 14px;
+  margin: 0;
+}
+
+body.dark-mode .app-card p {
+  color: #cbd5e0;
+}
+
+.problem-list {
+  line-height: 2;
+  padding-left: 25px;
+  color: #4a5568;
+}
+
+body.dark-mode .problem-list {
+  color: #cbd5e0;
+}
+
+.problem-list li {
+  margin: 10px 0;
+}
+
+

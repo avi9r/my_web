@@ -7,6 +7,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
+      },
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'gradient': 'gradient 15s ease infinite',

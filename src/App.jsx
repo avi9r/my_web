@@ -1,57 +1,38 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Skills from './components/Skills'
-import Experience from './components/Experience'
-import Projects from './components/Projects'
-import HotProjects from './components/HotProjects'
-import Education from './components/Education'
-import Contact from './components/Contact'
-import ThemeProvider from './context/ThemeContext'
-import CustomCursor from './components/CustomCursor'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import RootLayout from './layouts/RootLayout'
 
-function App() {
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+const TrackPage = lazy(() => import('./pages/TrackPage'))
+const LessonPage = lazy(() => import('./pages/LessonPage'))
+const DsaRoutes = lazy(() => import('./learn/dsa/DsaRoutes'))
+
+function Loading() {
   return (
-    <ThemeProvider>
-      <CustomCursor />
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <HotProjects />
-          <Education />
-          <Contact />
-        </main>
-        <motion.footer 
-          className="bg-gray-100 dark:bg-gray-800 py-6 text-center relative overflow-hidden"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <motion.p 
-            className="text-gray-600 dark:text-gray-400 relative z-10"
-            animate={{
-              opacity: [0.7, 1, 0.7],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            © {new Date().getFullYear()} Avinash Ranjan. All rights reserved.
-          </motion.p>
-        </motion.footer>
-      </div>
-    </ThemeProvider>
+    <div className="flex min-h-[50vh] items-center justify-center text-sm text-slate-500">
+      Loading…
+    </div>
   )
 }
 
-export default App
-
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route element={<RootLayout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="learn/dsa/*" element={<DsaRoutes />} />
+            <Route path="learn/:trackId" element={<TrackPage />} />
+            <Route path="learn/:trackId/:lessonId" element={<LessonPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  )
+}
